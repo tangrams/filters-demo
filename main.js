@@ -109,7 +109,7 @@
         var roadwidth = gui.add(gui, "roadwidth", 0, 100);
         roadwidth.onChange(function(value) {
             scene.config.layers["roads"].properties.width = value;
-            console.log(scene.config.layers["roads"].properties.width);
+            // console.log(scene.config.layers["roads"].properties.width);
             // scene.config.layers["roads"].style.width
             // scene.config.layers["roads"].bridges.properties.width = value;
             scene.rebuildGeometry();
