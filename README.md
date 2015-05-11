@@ -1,5 +1,7 @@
 # filters-demo
 
+** *This style is under development.* **
+
 A demo showing ways of filtering data with the stylesheet filters, geometry filters, and shader filters in [Tangram](http://github.com/tangrams/tangram).
 
 Live demo: http://tangrams.github.io/filters-demo/
