@@ -23,11 +23,43 @@
         #map {
             background: rgba(0, 0, 0, 0);
         }
+
+        #info {
+            position: fixed;
+            float: left;
+            top: 0px;
+            left: 50px;
+            width: 300px;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            font: 16px 'Lucida Grande', sans-serif;
+        }
+        #info p {
+            margin: 12px;
+        }
+        #info p.title {
+            color: #0cf;
+        }
+        
+        @media (max-width: 700px) {
+            #info {
+              visibility: hidden;
+            }
+        }
+
     </style>
   </head>
 
   <body>
     <div id="map"></div>
+    <div id="info">
+        <p class="title">BUILDING NAME FILTERING</p><p>Many buildings in OpenStreetMap have names. This demo filters buildings by name, building height, and pixel z-height.</p>
+        <p><b>building height:</b> scales 3D building height</p>
+        <p><b>geo filter:</b> filters geometry by building height, in meters - then rebuilds the tiles</p>
+        <p><b>shader filter:</b> filters pixels by z-height, in meters, using a real-time shader</p>
+        <p><b>filter text:</b> filters buildings by name - try park, building, house, school, or church</p>
+     </div>
 
     <!-- Start of 3rd party libraries -->
     <script src="lib/leaflet/leaflet.js"></script>
@@ -39,6 +71,7 @@
 
     <!-- Main tangram library -->
     <script src="https://mapzen.com/tangram/0.1/tangram.min.js"></script>
+    <!-- // <script src="lib/tangram.debug.js"></script> -->
 
     <!-- Demo module -->
     <script src="main.js"></script>
@@ -58,6 +91,24 @@
       repo: 'https://github.com/tangrams/filters-demo/'
     });
     </script>
+
+    <style>
+        /* enlarge dat.gui */
+        .dg {
+            font-size: 12pt;
+        }
+        .dg li:not(.folder) {
+            height: 40px;
+            line-height: 40px;
+        }
+        .dg .c .slider {
+            height: 30px;   
+        }
+        .dg .c input[type=text] {
+            font-size: 12pt;
+            height: 24px;   
+        }
+    </style>
 
   </body>
 </html>

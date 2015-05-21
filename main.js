@@ -6,7 +6,7 @@
     // Get location from URL
     var locations = {
         'London': [51.508, -0.105, 15],
-        'New York': [40.70531887544228, -74.00976419448853, 16],
+        'New York': [40.75, -74., 15],
         'Seattle': [47.609722, -122.333056, 15]
     };
 
@@ -28,6 +28,7 @@
 
     var map = L.map('map', {
         maxZoom: 20,
+        minZoom: 14,
         inertia: false,
         keyboard: true
     });
@@ -55,66 +56,49 @@
     resizeMap();
 
     // Create dat GUI
-    var gui = new dat.GUI({ autoPlace: true });
+    var gui = new dat.GUI({ autoPlace: true, width: 350 });
     function addGUI () {
 
         gui.domElement.parentNode.style.zIndex = 5; // make sure GUI is on top of map
         window.gui = gui;
-
-        // add color controls for each layer
-        var layer_gui = gui.addFolder('Layers');
-        var layer_colors = {};
-        var layer_controls = {};
-        Object.keys(layer.scene.config.layers).forEach(function(l) {
-            if (!layer.scene.config.layers[l]) {
-                return;
-            }
-
-            layer_controls[l] = !(layer.scene.config.layers[l].visible == false);
-            layer_gui.
-                add(layer_controls, l).
-                onChange(function(value) {
-                    layer.scene.config.layers[l].visible = value;
-                    layer.scene.rebuildGeometry();
-                });
-            try {
-                var c = layer.scene.config.layers[l].draw.polygons.color;
-            }
-            catch(e) {
-                var c = layer.scene.config.layers[l].draw.lines.color;
-            }
-        });
  
-        gui["building height"] = 0;
-        var bheight = gui.add(gui, "building height", 0, 150);
+        gui["building height"] = scene.styles["buildings"].shaders.uniforms.u_height;
+        var bheight = gui.add(gui, "building height", 0, 3);
         bheight.onChange(function(value) {
             scene.styles["buildings"].shaders.uniforms.u_height = value;
             scene.requestRedraw();
 
         });
         gui["geo filter"] = 0;
-        var geoheight = gui.add(gui, "geo filter", 0, 150);
+        var geoheight = gui.add(gui, "geo filter", 0, 200);
         geoheight.onChange(function(value) {
+            // scene.config.layers["buildings"].properties.filter_text = "";
             scene.config.layers["buildings"].properties.min_height = value;
             scene.rebuildGeometry();
         });
         gui["shader filter"] = 0;
-        var height = gui.add(gui, "shader filter", 0, 150);
+        var height = gui.add(gui, "shader filter", 0, 200);
         height.onChange(function(value) {
             scene.styles["buildings"].shaders.uniforms.u_color_height = value;
+            scene.styles["building-labels"].shaders.uniforms.u_color_height = value;
+            scene.config.layers["buildings"].properties.min_height = value;
             scene.requestRedraw();
         });
+   
 
-        gui.roadwidth = 5;
-        var roadwidth = gui.add(gui, "roadwidth", 0, 100);
-        roadwidth.onChange(function(value) {
-            scene.config.layers["roads"].properties.width = value;
-            // console.log(scene.config.layers["roads"].properties.width);
-            // scene.config.layers["roads"].style.width
-            // scene.config.layers["roads"].bridges.properties.width = value;
+
+        gui.input = scene.config.layers["buildings"].properties.filter_text;
+        var input = gui.add(gui, 'input').name("filter text");
+        input.onChange(function(value) {
+            // scene.config.layers["buildings"].properties.min_height = 0;
+            scene.config.layers["buildings"].properties.filter_text = value;
             scene.rebuildGeometry();
             scene.requestRedraw();
         });
+        // select input text when you click on it
+        input.domElement.id = "filterbox";
+        input.domElement.onclick = function() { this.getElementsByTagName('input')[0].select(); };
+
 
     }
 
@@ -123,6 +107,8 @@
         // Scene initialized
         layer.on('init', function() {
             addGUI();
+            var filterbox = document.getElementById('filterbox').getElementsByTagName('input')[0];
+            filterbox.focus();
         });
         layer.addTo(map);
     });
