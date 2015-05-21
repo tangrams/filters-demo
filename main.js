@@ -62,35 +62,22 @@
         gui.domElement.parentNode.style.zIndex = 5; // make sure GUI is on top of map
         window.gui = gui;
  
-        gui["building height"] = scene.styles["buildings"].shaders.uniforms.u_height;
-        var bheight = gui.add(gui, "building height", 0, 3);
+        gui["building scale"] = scene.styles["buildings"].shaders.uniforms.u_height;
+        var bheight = gui.add(gui, "building scale", 0, 3);
         bheight.onChange(function(value) {
             scene.styles["buildings"].shaders.uniforms.u_height = value;
             scene.requestRedraw();
 
         });
-        gui["geo filter"] = 0;
-        var geoheight = gui.add(gui, "geo filter", 0, 200);
+        gui["height filter"] = 0;
+        var geoheight = gui.add(gui, "height filter", 0, 200);
         geoheight.onChange(function(value) {
-            // scene.config.layers["buildings"].properties.filter_text = "";
             scene.config.layers["buildings"].properties.min_height = value;
             scene.rebuildGeometry();
         });
-        gui["shader filter"] = 0;
-        var height = gui.add(gui, "shader filter", 0, 200);
-        height.onChange(function(value) {
-            scene.styles["buildings"].shaders.uniforms.u_color_height = value;
-            scene.styles["building-labels"].shaders.uniforms.u_color_height = value;
-            scene.config.layers["buildings"].properties.min_height = value;
-            scene.requestRedraw();
-        });
-   
-
-
         gui.input = scene.config.layers["buildings"].properties.filter_text;
-        var input = gui.add(gui, 'input').name("filter text");
+        var input = gui.add(gui, 'input').name("text filter");
         input.onChange(function(value) {
-            // scene.config.layers["buildings"].properties.min_height = 0;
             scene.config.layers["buildings"].properties.filter_text = value;
             scene.rebuildGeometry();
             scene.requestRedraw();

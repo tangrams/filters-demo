@@ -27,17 +27,6 @@ styles:
                 u_color_height: 0 # height cutoff
             blocks:
                 position: position.z *= u_height;
-                color: if (v_world_position.z < u_color_height) discard; # simple filter
-    # use text color to filter labels if shader-filter-labels layer is shown
-    building-labels:
-        base: text
-        shaders:
-            uniforms:
-                u_color_height: 0
-            blocks:
-                color: |
-                    if (color.r < u_color_height/255.) discard;
-                    else color.rgb = vec3(1.);
 
 layers:
     earth:
@@ -86,22 +75,10 @@ layers:
                 style: buildings
                 color: red
                 extrude: true
-            # text: # this layer does not respond to the shader filter, and looks better
-            #     order: 4
-            #     text_source: name
-            #     font:
-            #         typeface: bold 10pt Lucida Grande
-            #         fill: white
-            #         stroke: { color: black, width: 4 }
-            shader-filter-labels: # this layer responds to the shader filter
+            text:
                 order: 4
-                style: building-labels
                 text_source: name
-                # text_source: function() {if (feature.height > properties.min_height) {return feature.name}; }
                 font:
                     typeface: bold 10pt Lucida Grande
-                    fill: |
-                        function() {
-                            var a = feature.height/255.;
-                            return [a, 0., 0.];
-                        }
+                    fill: white
+                    stroke: { color: black, width: 4 }
