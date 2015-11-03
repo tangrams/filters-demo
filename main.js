@@ -59,7 +59,7 @@
     var gui = new dat.GUI({ autoPlace: true, width: 350 });
     function addGUI () {
 
-        gui.domElement.parentNode.style.zIndex = 5; // make sure GUI is on top of map
+        gui.domElement.parentNode.style.zIndex = 500; // make sure GUI is on top of map
         window.gui = gui;
  
         gui["building scale"] = scene.styles["buildings"].shaders.uniforms.u_height;
