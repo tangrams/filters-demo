@@ -79,6 +79,8 @@ layers:
                 order: 4
                 text_source: name
                 font:
-                    typeface: bold 10pt Lucida Grande
+                    weight: bold
+                    size: 10pt
+                    family: Lucida Grande
                     fill: white
                     stroke: { color: black, width: 4 }
