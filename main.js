@@ -3,14 +3,7 @@
 
 (function () {
 
-    // Get location from URL
-    var locations = {
-        'London': [51.508, -0.105, 15],
-        'New York': [40.75, -73.99, 14],
-        'Seattle': [47.609722, -122.333056, 15]
-    };
-
-    var map_start_location = locations['New York'];
+    var map_start_location = [40.7238, -73.9881, 14]; // NYC
 
     /*** URL parsing ***/
 
