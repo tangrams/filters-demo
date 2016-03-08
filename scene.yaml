@@ -33,21 +33,21 @@ layers:
         data: { source: osm }
         draw:
             polygons:
-                order: 0
+                order: function() { return feature.sort_key; }
                 color: [.5, .5, .5]
 
     landuse:
         data: { source: osm }
         draw:
             polygons:
-                order: 1
+                order: function() { return feature.sort_key; }
                 color: [.6, .6, .6]
 
     water:
         data: { source: osm }
         draw:
             polygons:
-                order: 2
+                order: function() { return feature.sort_key; }
                 color: [.4, .4, .4]
 
     roads:
@@ -55,7 +55,7 @@ layers:
         properties: { width: 3 }
         draw:
             lines:
-                order: 2
+                order: function() { return feature.sort_key; }
                 color: [1, 1, 1]
                 width: 3
 
@@ -71,12 +71,12 @@ layers:
             }
         draw:
             polygons:
-                order: 4
+                order: function() { return feature.sort_key; }
                 style: buildings
                 color: red
                 extrude: true
             text:
-                order: 4
+                order: function() { return feature.sort_key; }
                 text_source: name
                 font:
                     weight: bold
