@@ -65,13 +65,13 @@
         gui["height filter"] = 0;
         var geoheight = gui.add(gui, "height filter", 0, 200);
         geoheight.onChange(function(value) {
-            scene.config.layers["buildings"].properties.min_height = value;
+            scene.config.global.min_height = value;
             scene.rebuildGeometry();
         });
-        gui.input = scene.config.layers["buildings"].properties.filter_text;
+        gui.input = scene.config.global.filter_text;
         var input = gui.add(gui, 'input').name("text filter");
         input.onChange(function(value) {
-            scene.config.layers["buildings"].properties.filter_text = value;
+            scene.config.global.filter_text = value;
             scene.rebuildGeometry();
             scene.requestRedraw();
         });
