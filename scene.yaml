@@ -16,8 +16,11 @@ lights:
 sources:
     osm:
         type: TopoJSON
-        url:  https://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-HqUVidw
+        url: https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.topojson?api_key=mapzen-QF1osLn
         max_zoom: 16
+global:
+    min_height: 5
+    filter_text: ""
 
 styles:
     buildings:
@@ -34,50 +37,46 @@ layers:
         data: { source: osm }
         draw:
             polygons:
-                order: function() { return feature.sort_key; }
+                order: function() { return feature.sort_rank; }
                 color: [.5, .5, .5]
 
     landuse:
         data: { source: osm }
         draw:
             polygons:
-                order: function() { return feature.sort_key; }
+                order: function() { return feature.sort_rank; }
                 color: [.6, .6, .6]
 
     water:
         data: { source: osm }
         draw:
             polygons:
-                order: function() { return feature.sort_key; }
+                order: function() { return feature.sort_rank; }
                 color: [.4, .4, .4]
 
     roads:
         data: { source: osm }
-        properties: { width: 3 }
         draw:
             lines:
-                order: function() { return feature.sort_key; }
+                order: function() { return feature.sort_rank; }
                 color: [1, 1, 1]
                 width: 3
 
     buildings:
         data: { source: osm }
 
-        properties:
-            min_height: 5
-            filter_text: ""
         filter: |
             function () {
-                return (feature.height > properties.min_height) && feature.name && feature.name.toLowerCase().indexOf(properties.filter_text.toLowerCase().trim()) > -1;
+                return (feature.height > global.min_height) && feature.name && feature.name.toLowerCase().indexOf(global.filter_text.toLowerCase().trim()) > -1;
             }
         draw:
             polygons:
-                order: function() { return feature.sort_key; }
+                order: function() { return feature.sort_rank; }
                 style: buildings
                 color: red
                 extrude: true
             text:
-                order: function() { return feature.sort_key; }
+                order: function() { return feature.sort_rank; }
                 text_source: name
                 font:
                     weight: bold
