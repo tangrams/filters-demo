@@ -16,7 +16,7 @@ lights:
 sources:
     osm:
         type: TopoJSON
-        url: https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.topojson?api_key=mapzen-QF1osLn
+        url: https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.topojson?api_key=mapzen-tDHBHDp
         max_zoom: 16
 global:
     min_height: 5
