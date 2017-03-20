@@ -14,7 +14,7 @@ lights:
         ambient: .35
 
 sources:
-    osm:
+    mapzen:
         type: TopoJSON
         url: https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.topojson
         url_params:
@@ -36,28 +36,28 @@ styles:
 
 layers:
     earth:
-        data: { source: osm }
+        data: { source: mapzen }
         draw:
             polygons:
                 order: function() { return feature.sort_rank; }
                 color: [.5, .5, .5]
 
     landuse:
-        data: { source: osm }
+        data: { source: mapzen }
         draw:
             polygons:
                 order: function() { return feature.sort_rank; }
                 color: [.6, .6, .6]
 
     water:
-        data: { source: osm }
+        data: { source: mapzen }
         draw:
             polygons:
                 order: function() { return feature.sort_rank; }
                 color: [.4, .4, .4]
 
     roads:
-        data: { source: osm }
+        data: { source: mapzen }
         draw:
             lines:
                 order: function() { return feature.sort_rank; }
@@ -65,7 +65,7 @@ layers:
                 width: 3
 
     buildings:
-        data: { source: osm }
+        data: { source: mapzen }
 
         filter: |
             function () {
